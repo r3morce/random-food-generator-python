@@ -2,6 +2,7 @@
 
 import random
 import csv
+import time
 
 class Ranking:
     def __init__(self, food, x, y):
@@ -29,8 +30,16 @@ csvfile.close()
 
 pick = random.uniform(0.0, max_ranking)
 
+print("Chances are:")
+
 for ranking in rankings:
-    print "compare ranking:",ranking.food, ranking.min,"to", ranking.max, "pick:", pick
+    chance = ((ranking.max-ranking.min)/max_ranking)*100
+    print("\t{:2.2f}%\tfor {}".format(chance, ranking.food))
+
+raw_input("\nPress Enter to continue...")
+
+for ranking in rankings:
     if pick >= ranking.min and pick <= ranking.max:
-        print "\nYou have to eat", ranking.food
+        time = time.strftime("%A %d.%m.%Y")
+        print("\n[{}] You have to eat {}\n".format(time, ranking.food))
         break
