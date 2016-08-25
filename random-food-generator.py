@@ -40,7 +40,7 @@ with open(csv_file_name, 'r') as csvfile:
         chance = ((ranking.max-ranking.min)/max_ranking)*100
         print("\t{:2.2f}%\tfor {}".format(chance, ranking.food))
 
-    raw_input("\nPress Enter to continue...")
+    input("\nPress Enter to continue...")
 
     # roll random food
     for ranking in rankings:
@@ -50,15 +50,16 @@ with open(csv_file_name, 'r') as csvfile:
             print("\n[{}] You have to eat {}\n".format(time, selected_food))
             break
 
-    # write
+    # change the odds
     for new_row in new_rows:
         if new_row[0] == selected_food:
-
             new_ranking = int(new_row[1])+1
             new_row[1] = new_ranking
 
-            writer_file = open(csv_file_name, 'w')
-            writer = csv.writer(writer_file, delimiter =';', quotechar='"')
-            writer.writerows(new_rows)
+    # write
+    with open(csv_file_name, 'w') as csvfile:
+        writer = csv.writer(csvfile, delimiter =';', lineterminator='\n', quotechar='"')
+        writer.writerows(new_rows)
+        print("The odds for {} are decreased".format(selected_food))
 
-            print("The odds for {} are decreased".format(selected_food))
+    input("\nPress Enter to exit...")
